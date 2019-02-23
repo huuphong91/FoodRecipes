@@ -60,6 +60,8 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
             @Override
             public boolean onQueryTextSubmit(String query) {
 
+                mAdapter.displayLoading();
+
                 // Search the database for a recipe
                 mRecipeListViewModel.searchRecipeApi(query, 1);
 
