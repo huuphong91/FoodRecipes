@@ -1,4 +1,4 @@
-package com.example.foodrecipes.requests;
+package com.example.foodrecipes.network;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -6,13 +6,12 @@ import android.util.Log;
 
 import com.example.foodrecipes.AppExecutors;
 import com.example.foodrecipes.models.Recipe;
-import com.example.foodrecipes.requests.responses.RecipeSearchResponse;
+import com.example.foodrecipes.network.responses.RecipeSearchResponse;
 import com.example.foodrecipes.util.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -96,7 +95,7 @@ public class RecipeApiClient {
         }
 
         private Call<RecipeSearchResponse> getRecipes(String query, int pageNumber) {
-            return ServiceGenerator.getRecipeApi().searchRecipe(Constants.API_KEY, query, String.valueOf(pageNumber));
+            return RetrofitFactory.getRecipeApi().searchRecipe(Constants.API_KEY, query, String.valueOf(pageNumber));
         }
 
         private void cancelRequest() {

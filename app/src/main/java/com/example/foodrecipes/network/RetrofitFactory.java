@@ -1,11 +1,11 @@
-package com.example.foodrecipes.requests;
+package com.example.foodrecipes.network;
 
 import com.example.foodrecipes.util.Constants;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ServiceGenerator {
+public class RetrofitFactory {
     private static Retrofit.Builder retrofitBuilder =
             new Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL)

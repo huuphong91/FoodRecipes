@@ -1,4 +1,4 @@
-package com.example.foodrecipes.requests.responses;
+package com.example.foodrecipes.network.responses;
 
 import com.example.foodrecipes.models.Recipe;
 import com.google.gson.annotations.Expose;

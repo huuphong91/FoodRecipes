@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.foodrecipes.adapters.OnRecipeListener;
 import com.example.foodrecipes.adapters.RecipeRecyclerAdapter;
 import com.example.foodrecipes.util.Testing;
+import com.example.foodrecipes.util.VerticalSpacingItemDecorator;
 import com.example.foodrecipes.viewmodels.RecipeListViewModel;
 
 
@@ -32,15 +33,25 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         initRecyclerView();
         subscribeObservers();
         initSearchView();
+        if (!mRecipeListViewModel.isViewingRecipes()) {
+            displaySearchCategories();
+        }
+    }
+
+    private void displaySearchCategories() {
+        mRecipeListViewModel.setIsViewingRecipes(false);
+        mAdapter.displaySearchCategories();
     }
 
     private void subscribeObservers() {
 
         mRecipeListViewModel.getRecipes().observe(this, recipes -> {
             if (recipes != null) {
-                Testing.printRecipes(recipes, TAG);
+                if (mRecipeListViewModel.isViewingRecipes()) {
+                    Testing.printRecipes(recipes, TAG);
+                    mAdapter.setRecipes(recipes);
+                }
             }
-            mAdapter.setRecipes(recipes);
         });
     }
 
@@ -50,6 +61,8 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     private void initRecyclerView() {
         mAdapter = new RecipeRecyclerAdapter(this);
+        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(30);
+        mRecyclerView.addItemDecoration(itemDecorator);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -85,6 +98,18 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onCategoryClick(String category) {
+        mAdapter.displayLoading();
 
+        // Search the database for a recipe
+        mRecipeListViewModel.searchRecipeApi(category, 1);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mRecipeListViewModel.onBackPressed()) {
+            super.onBackPressed();
+        } else {
+            displaySearchCategories();
+        }
     }
 }

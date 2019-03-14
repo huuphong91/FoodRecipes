@@ -1,7 +1,7 @@
-package com.example.foodrecipes.requests;
+package com.example.foodrecipes.network;
 
-import com.example.foodrecipes.requests.responses.RecipeResponse;
-import com.example.foodrecipes.requests.responses.RecipeSearchResponse;
+import com.example.foodrecipes.network.responses.RecipeResponse;
+import com.example.foodrecipes.network.responses.RecipeSearchResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
